@@ -13,6 +13,12 @@ public class Repository<TEntity> : IRepository<TEntity>
     {
         _dbSet = appDb.Set<TEntity>();
     }
+
+    public void Add(TEntity entity)
+    {
+        _dbSet.Add(entity);
+    }
+
     public TEntity? GetById(Guid id)
     => _dbSet.FirstOrDefault(e => e.Id == id)!;
 
