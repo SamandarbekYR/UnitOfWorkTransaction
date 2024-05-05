@@ -15,15 +15,7 @@ namespace OracleTransaction.DataAccess.Repositories.Users
             _appDb = appDb;
         }
 
-        public async ValueTask UpdatePhoneBalanceAsync(string receiverPhoneNumber, double sendPrice)
-        {
-            var user = await _appDb.Users.FirstOrDefaultAsync(u => u.PhoneNumber == receiverPhoneNumber);
-            
-            if (user != null)
-            {
-                user.Balance = user.Balance + sendPrice;
-                _appDb.Users.Update(user);
-            }
-        }
+        public async ValueTask<User?> GetByPhoneNumber(string receiverPhoneNumber)
+        => await _appDb.Users.FirstOrDefaultAsync(x => x.PhoneNumber == receiverPhoneNumber);
     }
 }

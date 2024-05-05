@@ -1,15 +1,30 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
+using OracleTransaction.BusinessLogic.Interfaces;
+using OracleTransaction.BusinessLogic.Interfaces.Prosedures;
+using OracleTransaction.BusinessLogic.Services;
+using OracleTransaction.BusinessLogic.Services.Prodedures;
+using OracleTransaction.DataAccess.Data;
+using OracleTransaction.DataAccess.Interfaces;
+using OracleTransaction.DataAccess.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
+builder.Services.AddTransient<IPaynet,PaynetService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserCardService, UsersCardService>();
+builder.Services.AddScoped<IBankService, BankService>();
+builder.Services.AddDbContext<AppDbContext>(options =>
+{
+    var connection = builder.Configuration.GetConnectionString("OracleConnection");
+    options.UseOracle(connection);
+});
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

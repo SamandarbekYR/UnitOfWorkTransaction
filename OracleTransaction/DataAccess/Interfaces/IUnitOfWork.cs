@@ -1,4 +1,5 @@
-﻿using OracleTransaction.DataAccess.Interfaces.Users;
+﻿using OracleTransaction.DataAccess.Interfaces.Banks;
+using OracleTransaction.DataAccess.Interfaces.Users;
 
 namespace OracleTransaction.DataAccess.Interfaces
 {
@@ -6,7 +7,7 @@ namespace OracleTransaction.DataAccess.Interfaces
     {
         public IUsers Users { get; set; }
         public IUserCards UsersCards { get; set; }
-
+        public IBank Banks { get; set; }
         public Task<int> SaveChangesAsync();
         public void BeginTrasaction();
         public Task CommitAsync();
